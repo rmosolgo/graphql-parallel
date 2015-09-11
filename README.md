@@ -20,16 +20,36 @@ Or install it yourself as:
 
 ## Usage
 
+Require `GraphQL::Parallel`:
+
 ```ruby
 require 'graphql/parallel'
+```
 
-# Define all your types ...
+Use `context.async` in your field resolve functions:
+
+```ruby
+resolve -> (obj, args, context) do
+  # resolve other fields while this request
+  # is in progress:
+  context.async do
+    response = Net::HTTP.get_response(obj.uri)
+    response.body
+  end
+end
+```
+
+Use `GraphQL::Parallel::ExecutionStrategy` for your schema's read queries:
+
+```ruby
 # Define your schema:
 MySchema = GraphQL::Schema.new(query: MyQueryType)
 
 # Use parallel execution for read queries:
 MySchema.query_execution_strategy = GraphQL::Parallel::ExecutionStrategy
 ```
+
+_(`MySchema` will still use the default sequential execution strategy for mutations.)_
 
 ## License
 
