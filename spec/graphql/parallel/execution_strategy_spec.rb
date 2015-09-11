@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe GraphQL::Parallel::ExecutionStrategy do
-  let(:result) { GraphQL::Query.new(SlowSchema, query_string).result }
+  let(:result) { GraphQL::Query.new(SlowSchema, query_string, debug: false).result }
   describe "fields that take a long time" do
     let(:query_string) {%|
       {
@@ -24,6 +24,17 @@ describe GraphQL::Parallel::ExecutionStrategy do
         "slow2" => { "slow1" => 1, "slow2" => 1, "lastSlow" => 1},
       }}
       assert_equal expected, result, "It renders the right result"
+    end
+  end
+
+  describe "error handling" do
+    let(:query_string) {%|
+      { asyncError }
+    |}
+
+    it "puts errors in the errors key" do
+      first_error_message = result["errors"][0]["message"]
+      assert_includes(first_error_message, "raised on purpose")
     end
   end
 end

@@ -1,5 +1,6 @@
 require "graphql"
 require "celluloid/current"
+require "graphql/parallel/monkey_patches"
 require "graphql/parallel/version"
 require "graphql/parallel/future_field_resolution"
 require "graphql/parallel/execution_worker"

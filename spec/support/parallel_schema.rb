@@ -26,6 +26,10 @@ SlowQueryType = GraphQL::ObjectType.define do
   field :slow, SlowType do
     resolve -> (o, a, c) { :slow }
   end
+
+  field :asyncError, types.String do
+    resolve -> (o, a, c) { raise("This error was raised on purpose")  }
+  end
 end
 
 SlowSchema = GraphQL::Schema.new(query: SlowQueryType)
