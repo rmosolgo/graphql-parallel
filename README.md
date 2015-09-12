@@ -2,7 +2,7 @@
 
 [![Build Status](https://travis-ci.org/rmosolgo/graphql-parallel.svg?branch=master)](https://travis-ci.org/rmosolgo/graphql-parallel)
 
-Provides one layer of asynchronous field resolution to the [`graphql` gem](https://github.com/rmosolgo/graphql-ruby), backed Celluloid.
+Provides one layer of asynchronous field resolution to the [`graphql` gem](https://github.com/rmosolgo/graphql-ruby), backed by Celluloid.
 
 ## Installation
 
