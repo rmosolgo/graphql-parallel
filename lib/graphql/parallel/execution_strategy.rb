@@ -1,6 +1,6 @@
 module GraphQL
   module Parallel
-    class ExecutionStrategy < GraphQL::Query::BaseExecution
+    class ExecutionStrategy < GraphQL::Query::SerialExecution
       def initialize
         # Why isn't `require "celluloid/current"` enough here?
         Celluloid.boot unless Celluloid.running?
@@ -55,9 +55,6 @@ module GraphQL
         end
       end
 
-      class SelectionResolution < GraphQL::Query::SerialExecution::SelectionResolution
-      end
-
       class FieldResolution < GraphQL::Query::SerialExecution::FieldResolution
         def get_finished_value(raw_value)
           if raw_value.is_a?(Celluloid::Future)
@@ -66,12 +63,6 @@ module GraphQL
             super
           end
         end
-      end
-
-      class InlineFragmentResolution < GraphQL::Query::SerialExecution::InlineFragmentResolution
-      end
-
-      class FragmentSpreadResolution < GraphQL::Query::SerialExecution::FragmentSpreadResolution
       end
     end
   end
