@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_runtime_dependency "graphql", "~>0.8"
+  spec.add_runtime_dependency "graphql", "~>0.9.4"
   spec.add_runtime_dependency "celluloid", "~>0.17"
 
   spec.add_development_dependency "codeclimate-test-reporter", '~>0.4'

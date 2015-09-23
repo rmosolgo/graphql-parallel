@@ -27,14 +27,25 @@ describe GraphQL::Parallel::ExecutionStrategy do
     end
   end
 
-  describe "error handling" do
+  describe "rescuing errors" do
     let(:query_string) {%|
-      { asyncError }
+      { asyncRaisedError }
     |}
 
     it "puts errors in the errors key" do
       first_error_message = result["errors"][0]["message"]
       assert_includes(first_error_message, "raised on purpose")
+    end
+  end
+
+  describe "returned errors" do
+    let(:query_string) {%|
+      { asyncReturnedError }
+    |}
+
+    it "puts errors in the errors key" do
+      first_error_message = result["errors"][0]["message"]
+      assert_includes(first_error_message, "returned on purpose")
     end
   end
 end
